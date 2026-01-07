@@ -26,11 +26,11 @@
 
 # See https://wiki.zshell.dev/community/zsh_plugin_standard#standard-plugins-hash
 declare -gA EMACS
-$EMACS[_PLUGIN_DIR]="${0:h}"
-$EMACS[_ALIASES]=""
-$EMACS[_FUNCTIONS]=""
-$EMACS[_OLD_ALTERNATE_EDITOR]="${ALTERNATE_EDITOR}"
-$EMACS[_OLD_EMACS_CONF]="${EMACS_CONF}"
+EMACS[_PLUGIN_DIR]="${0:h}"
+EMACS[_ALIASES]=""
+EMACS[_FUNCTIONS]=""
+EMACS[_OLD_ALTERNATE_EDITOR]="${ALTERNATE_EDITOR}"
+EMACS[_OLD_EMACS_CONF]="${EMACS_CONF}"
 
 ############################################################################
 # Internal Support Functions
