@@ -31,8 +31,10 @@ EMACS[_ALIASES]=""
 EMACS[_FUNCTIONS]=""
 
 # Saving the current state for any modified global environment variables.
-EMACS[_OLD_ALTERNATE_EDITOR]="${ALTERNATE_EDITOR}"
 EMACS[_OLD_EMACS_CONF]="${EMACS_CONF}"
+EMACS[_OLD_EDITOR]="${EDITOR}"
+EMACS[_OLD_ALTERNATE_EDITOR]="${ALTERNATE_EDITOR}"
+EMACS[_OLD_VISUAL]="${VISUAL}"
 
 ############################################################################
 # Internal Support Functions
@@ -71,6 +73,27 @@ EMACS[_OLD_EMACS_CONF]="${EMACS_CONF}"
 }
 .emacs_remember_fn .emacs_remember_alias
 
+emacs_plugin_init() {
+    builtin emulate -L zsh
+    builtin setopt extended_glob warn_create_global typeset_silent no_short_loops rc_quotes no_auto_pushd
+
+    export EMACS_CONF="${HOME}/.emacs.d"
+
+    if [[ -n "${SSH_CONNECTION}" ]]; then
+        export EDITOR=vim
+    else
+        export EDITOR='emacsclient -nw'
+    fi
+
+    export ALTERNATE_EDITOR=''
+
+    export VISUAL=emacs
+
+    .emacs_define_alias emacs 'emacsclient -nw'
+    .emacs_define_alias gemacs 'emacsclient -c'
+}
+.emacs_remember_fn emacs_plugin_init
+
 ############################################################################
 # Plugin Unload Function
 ############################################################################
@@ -96,8 +119,10 @@ emacs_plugin_unload() {
     done
 
     # Reset global environment variables .
-    export ALTERNATE_EDITOR="${EMACS[_OLD_ALTERNATE_EDITOR]}"
     export EMACS_CONF="${EMACS[_OLD_EMACS_CONF]}"
+    export EDITOR="${EMACS[_OLD_EDITOR]}"
+    export ALTERNATE_EDITOR="${EMACS[_OLD_ALTERNATE_EDITOR]}"
+    export VISUAL="${EMACS[_OLD_VISUAL]}"
 
     # Remove the global data variable.
     unset EMACS
@@ -107,17 +132,9 @@ emacs_plugin_unload() {
 }
 
 ############################################################################
-# Plugin-defined Aliases
-############################################################################
-
-export ALTERNATE_EDITOR=
-export EMACS_CONF="${HOME}/.emacs.d"
-
-.emacs_define_alias emacs 'emacsclient -nw'
-.emacs_define_alias gemacs 'emacsclient -c'
-
-############################################################################
 # Initialize Plugin
 ############################################################################
+
+emacs_plugin_init
 
 true
