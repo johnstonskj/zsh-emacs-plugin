@@ -29,6 +29,8 @@ declare -gA EMACS
 EMACS[_PLUGIN_DIR]="${0:h}"
 EMACS[_ALIASES]=""
 EMACS[_FUNCTIONS]=""
+
+# Saving the current state for any modified global environment variables.
 EMACS[_OLD_ALTERNATE_EDITOR]="${ALTERNATE_EDITOR}"
 EMACS[_OLD_EMACS_CONF]="${EMACS_CONF}"
 
@@ -92,6 +94,10 @@ emacs_plugin_unload() {
     for alias in ${aliases[@]}; do
         unalias "${alias}"
     done
+
+    # Reset global environment variables .
+    export ALTERNATE_EDITOR="${EMACS[_OLD_ALTERNATE_EDITOR]}"
+    export EMACS_CONF="${EMACS[_OLD_EMACS_CONF]}"
 
     # Remove the global data variable.
     unset EMACS
