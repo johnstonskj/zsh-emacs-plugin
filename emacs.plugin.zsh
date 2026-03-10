@@ -1,7 +1,10 @@
 # -*- mode: sh; eval: (sh-set-shell "zsh") -*-
 #
-# Plugin Name: emacs
-# Repository: https://github.com/johnstonskj/zsh-emacs-plugin
+# @name: emacs
+# @brief: Set initial Emacs environment.
+# @repository: https://github.com/johnstonskj/zsh-emacs-plugin
+# @version: 0.1.1
+# @license: MIT AND Apache-2.0
 #
 # Description:
 #
