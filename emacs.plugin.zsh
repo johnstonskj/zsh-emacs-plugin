@@ -21,24 +21,24 @@ emacs_plugin_init() {
 
     if [[ "${EMACS_CONF}" != "${HOME}/.emacs.d" ]]; then
         @zplugins_envvar_save emacs EMACS_CONF
-        export EMACS_CONF="${HOME}/.emacs.d"
+        typeset -g EMACS_CONF="${HOME}/.emacs.d"
     fi
 
     @zplugins_envvar_save emacs EDITOR
     if [[ -n "${SSH_CONNECTION}" ]]; then
-        export EDITOR=vim
+        typeset -g EDITOR=vim
     else
-        export EDITOR='emacsclient -nw'
+        typeset -g EDITOR='emacsclient -nw'
     fi
 
     if [[ -n "${ALTERNATE_EDITOR}" ]]; then
         @zplugins_envvar_save emacs ALTERNATE_EDITOR
-        export ALTERNATE_EDITOR=''
+        typeset -g ALTERNATE_EDITOR=''
     fi
 
     if [[ "${VISUAL}" != "emacs" ]]; then
         @zplugins_envvar_save emacs VISUAL
-        export VISUAL=emacs
+        typeset -g VISUAL=emacs
     fi
 
     @zplugins_define_alias emacs emacs 'emacsclient -nw'
